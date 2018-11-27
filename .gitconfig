@@ -1,0 +1,50 @@
+
+[user]
+    name = "Robert van Kempen"
+    email = DoNormal@users.noreply.github.com
+
+[alias]
+    # http://haacked.com/archive/2014/07/28/github-flow-aliases/
+    s = status
+    co = checkout
+    ec = config --global -e
+    up = !git pull --rebase --prune $@ && git submodule update --init --recursive
+    cob = checkout -b
+    cm = !git add -A && git commit
+    cms = !git add -A && git commit -m
+    save = !git add -A && git commit -m 'SAVEPOINT'
+    wip = !git add -u && git commit -m "WIP"
+    undo = reset HEAD~1 --mixed
+    amend = commit -a --amend
+    wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
+    bclean = "!f() { git branch --merged ${1-master} | grep -v " ${1-master}$" | xargs -r git branch -d; }; f"
+    bdone = "!f() { git checkout ${1-master} && git up && git bclean ${1-master}; }; f"
+    migrate = "!f(){ CURRENT=$(git symbolic-ref --short HEAD); git checkout -b $1 && git branch --force $CURRENT ${3-'$CURRENT@{u}'} && git rebase --onto ${2-master} $CURRENT; }; f"
+    compare = "!f() { git log --oneline $1..$2;  }; f"
+
+    # https://github.com/soffes/dotfiles/blob/master/.gitconfig
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+
+    tickets = "!f() { git log --no-merges --abbrev-commit --pretty=\"format:%s\" --date=iso $1 | grep -e '[A-Z]\\+-[0-9]\\+'; }; f"
+    changelog = !git --no-pager log --pretty=format:'- %s (%h)' --grep=Merge --invert-grep --reverse
+    p = !git push origin HEAD
+    pf = !git push origin HEAD --force-with-lease
+    pt = !git push origin HEAD --follow-tags
+
+[merge]
+    tool = kdiff3
+
+[core]
+    filemode = false
+    autocrlf = input
+    excludesfile = ~/.gitignore
+
+[tag]
+    sort = version:refname
+
+[pull]
+    rebase = true
+
+[remote "origin"]
+    prune = true
+    fetch = +refs/pull/*/head:refs/remotes/origin/pr/*
