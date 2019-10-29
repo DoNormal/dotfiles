@@ -25,7 +25,6 @@
     # https://github.com/soffes/dotfiles/blob/master/.gitconfig
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
 
-    tickets = "!f() { git log --no-merges --abbrev-commit --pretty=\"format:%s\" --date=iso $1 | grep -e '[A-Z]\\+-[0-9]\\+'; }; f"
     changelog = !git --no-pager log --pretty=format:'- %s (%h)' --grep=Merge --invert-grep --reverse
     p = !git push origin HEAD
     pf = !git push origin HEAD --force-with-lease
